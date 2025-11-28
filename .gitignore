@@ -3,3 +3,7 @@
 credentials
 aws_credentials
 packer.secrets.json
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.terraform.lock.hcl
