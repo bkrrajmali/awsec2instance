@@ -1,0 +1,5 @@
+.env
+.aws/
+credentials
+aws_credentials
+packer.secrets.json

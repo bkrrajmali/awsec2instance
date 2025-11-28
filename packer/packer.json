@@ -1,0 +1,44 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "region": "us-east-1",
+    "source_ami": "ami-0ecb62995f68bb549",
+    "instance_type": "t2.micro",
+    "ami_name": "my-custom-ami-{{timestamp}}"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "{{user `region`}}",
+      "source_ami": "{{user `source_ami`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "ubuntu",
+      "ssh_private_key_file":"~/.ssh/lal.pem",
+      "ssh_keypair_name": "lal",
+      "ami_name": "{{user `ami_name`}}",
+      "tags": {
+        "Name": "{{user `ami_name`}}",
+        "CreatedBy": "Packer"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+      "set -eux",
+      "export DEBIAN_FRONTEND=noninteractive",
+      "sudo apt-get update -y",
+      "sudo apt-get install -y software-properties-common",
+      "sudo apt-add-repository --yes --update ppa:ansible/ansible",
+      "sudo apt-get update -y",
+      "sudo apt-get install -y ansible nginx git stress",
+      "sudo systemctl enable --now nginx",
+      "sudo git clone https://github.com/bkrraj/ansibletemplatetesting.git /myrepo"
+     ]
+    }
+  ]
+}
