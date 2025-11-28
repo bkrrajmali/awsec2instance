@@ -64,7 +64,7 @@ resource "aws_subnet" "demosubnet" {
 resource "aws_security_group" "demosg" {
   name        = "demosg"
   description = "Security group for example instances"
-  vpc_id      = aws_vpc.main_vpc.id # Assuming 'aws_vpc.main' is a defined VPC resource
+  vpc_id      = aws_vpc.main_vpc.id # Assuming 'aws_vpc.main' is a defined VPC resource 
 
   ingress {
     description      = "Allow HTTP from anywhere"
