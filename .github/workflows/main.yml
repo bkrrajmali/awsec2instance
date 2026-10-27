@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Message
-        run: echo "Hello Grom Github Actions"
+        run: echo "Hello From Github Actions"
 
 
 
