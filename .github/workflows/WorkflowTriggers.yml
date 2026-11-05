@@ -1,0 +1,34 @@
+name: Lab 02 - Workflow Triggers
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - ".github/workflows/lab02.yml"
+
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Select environment
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - prod
+
+jobs:
+  trigger-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show event
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          TARGET: ${{ inputs.environment }}
+        run: |
+          echo "Event: $EVENT_NAME"
+          echo "Environment: ${TARGET:-not-specified}"
